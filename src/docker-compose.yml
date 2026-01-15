@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.3.3
+    environment:
+      KC_DB: postgres
+      KC_DB_URL_DATABASE: keycloak
+      KC_DB_URL_HOST: postgres
+      KC_DB_URL_PORT: 5432
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: postgres
+      KC_DB_SCHEMA: public
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HOSTNAME: localhost
+      KC_HOSTNAME_STRICT_HTTPS: "false"
+      JAVA_OPTS_APPEND: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+    command: start-dev
+    ports:
+      - "8080:8080"
+      - "5005:5005"
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    volumes:
+      - ./target/*.jar:/opt/keycloak/providers/
+      - ./src/main/resources/theme:/opt/keycloak/themes/
+
+  postgres:
+    image: postgres:13.22-trixie
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "8025:8025"  # Web UI
+      - "1025:1025"  # SMTP port
+
+volumes:
+  postgres_data:
