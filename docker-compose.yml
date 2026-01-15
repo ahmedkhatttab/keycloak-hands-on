@@ -24,7 +24,7 @@ services:
       - postgres
     restart: unless-stopped
     volumes:
-      - ./target/*.jar:/opt/keycloak/providers/
+      - ./target/deploy:/opt/keycloak/providers/
       - ./src/main/resources/theme:/opt/keycloak/themes/
 
   postgres:
