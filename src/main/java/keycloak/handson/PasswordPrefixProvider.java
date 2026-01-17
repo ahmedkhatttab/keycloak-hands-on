@@ -22,7 +22,7 @@ public class PasswordPrefixProvider implements PasswordPolicyProvider {
     public PolicyError validate(String user, String password) {
         // read config by key name
         String policyConfigValue = context.getRealm().getPasswordPolicy().getPolicyConfig(
-                PasswordPrefixProviderFactory.DEFAULT_PASSWORD_PREFIX);
+                PasswordPrefixProviderFactory.ID);
         return password.startsWith(policyConfigValue) ? null : new PolicyError("Password should start with: ", policyConfigValue);
     }
 
@@ -37,3 +37,4 @@ public class PasswordPrefixProvider implements PasswordPolicyProvider {
 
     }
 }
+
