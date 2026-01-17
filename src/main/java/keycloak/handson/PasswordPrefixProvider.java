@@ -23,13 +23,14 @@ public class PasswordPrefixProvider implements PasswordPolicyProvider {
         // read config by key name
         String policyConfigValue = context.getRealm().getPasswordPolicy().getPolicyConfig(
                 PasswordPrefixProviderFactory.ID);
+        System.out.println(">>>>>>>>>>> policyConfigValue: " + policyConfigValue);
         return password.startsWith(policyConfigValue) ? null : new PolicyError("Password should start with: ", policyConfigValue);
     }
 
-    // parse config based on expected stored value if none string
+    // parse config based on expected stored value must not return null
     @Override
     public Object parseConfig(String value) {
-        return null;
+        return value;
     }
 
     @Override
