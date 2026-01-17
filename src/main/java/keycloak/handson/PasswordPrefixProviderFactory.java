@@ -7,23 +7,23 @@ import org.keycloak.policy.PasswordPolicyProvider;
 import org.keycloak.policy.PasswordPolicyProviderFactory;
 
 public class PasswordPrefixProviderFactory implements PasswordPolicyProviderFactory {
-    // KEY NAME
+    // CONFIG NAME
     public static final String ID = "passwordPrefix";
     public static final String DEFAULT_PASSWORD_PREFIX = "AM";
 
     // NAME IN UI
     @Override
     public String getDisplayName() {
-        return "Password Prefix Provider";
+        return "Password Prefix";
     }
 
-    // KEY DATA TYPE
+    // CONFIG TYPE
     @Override
     public String getConfigType() {
         return PasswordPolicyProvider.STRING_CONFIG_TYPE;
     }
 
-    // DEFAULT VALUE
+    // CONFIG DEFAULT VALUE
     @Override
     public String getDefaultConfigValue() {
         return DEFAULT_PASSWORD_PREFIX;
