@@ -33,13 +33,14 @@ public class UserSessionResource {
         return rep;
     }
 
+    @Path("")
     @GET
-    @Consumes({"application/json"})
     @Produces({"application/json"})
-
     public Stream<SessionRepresentationDto> realmSessions(@QueryParam("first") @DefaultValue("0") int first,
                                                           @QueryParam("max") @DefaultValue("10") int max) {
-        final Map<String, Long> clientSessionStats = session.sessions().getActiveClientSessionStats(realm, true);
+        log.infov(">>>>> realmSessions");
+        final Map<String, Long> clientSessionStats = session.sessions().getActiveClientSessionStats(realm, false);
+        log.infov(">>>>> clientSessionStats = {0}", clientSessionStats);
         clientSessionStats.entrySet().stream().peek(entry -> {
             log.infov("KEY {0} : VALUE {1}", entry.getKey(), entry.getValue());
         });
