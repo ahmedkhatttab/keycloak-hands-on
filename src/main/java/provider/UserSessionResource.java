@@ -4,6 +4,8 @@ import jakarta.ws.rs.*;
 import org.jboss.logging.Logger;
 import org.keycloak.common.util.Time;
 import org.keycloak.models.*;
+import org.keycloak.services.managers.AppAuthManager;
+import org.keycloak.services.managers.AuthenticationManager;
 
 import java.util.Map;
 import java.util.stream.Stream;
@@ -38,6 +40,12 @@ public class UserSessionResource {
     @Produces({"application/json"})
     public Stream<SessionRepresentationDto> realmSessions(@QueryParam("first") @DefaultValue("0") int first,
                                                           @QueryParam("max") @DefaultValue("10") int max) {
+//        session.getProvider(AdminPermissionEvaluatorProvider.class)
+        AuthenticationManager.AuthResult auth = new AppAuthManager.BearerTokenAuthenticator(session).authenticate();
+        if (auth == null) {
+            log.error(">>>>> Bearer token missing or invalid");
+            throw new NotAuthorizedException("Bearer token missing or invalid");
+        }
         log.infov(">>>>> realmSessions");
         final Map<String, Long> clientSessionStats = session.sessions().getActiveClientSessionStats(realm, false);
         log.infov(">>>>> clientSessionStats = {0}", clientSessionStats);
