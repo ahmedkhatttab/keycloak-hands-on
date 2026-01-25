@@ -45,12 +45,13 @@
             <artifactId>jboss-jaxrs-api_2.1_spec</artifactId>
             <version>2.0.1.Final</version>
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>org.keycloak</groupId>-->
-        <!--            <artifactId>keycloak-model-jpa</artifactId>-->
-        <!--            <version>${keycloak.version}</version>-->
-        <!--            <scope>provided</scope>-->
-        <!--        </dependency>-->
+        <!-- to access keycloak jpa provider -->
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-model-jpa</artifactId>
+            <version>${keycloak.version}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <profiles>
